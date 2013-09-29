@@ -84,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 			UserInfoVO userVO = new UserInfoVO();
 			userVO.setuserName((String)request.getParameter("username"));
 			userVO.setpassWord((String)request.getParameter("password"));
-        System.out.println("Test git");
+        System.out.println("Test git1111");
 			boolean flag=dbutil.LoginUser(userVO);
 			if(flag)
 			{
