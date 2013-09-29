@@ -13,10 +13,10 @@ import org.gmu.swe681.util.DBUtil;
 import org.gmu.swe681.util.UserInfoVO;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class RegistrationServlet
  */
-@WebServlet("/Login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/Register")
+public class RegisterServlet extends HttpServlet {
 
     /**
 	 * 
@@ -41,10 +41,10 @@ public class LoginServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet RegisterServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RegisterServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {            
@@ -78,24 +78,20 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {
-			DBUtil dbutil = new DBUtil();
-			UserInfoVO userVO = new UserInfoVO();
-			userVO.setuserName((String)request.getParameter("username"));
-			userVO.setpassWord((String)request.getParameter("password"));
-            System.out.println("Test git");
-			boolean flag=dbutil.LoginUser(userVO);
-			if(flag)
-			{
-				
-			
-				request.getRequestDispatcher("Result.jsp").forward(request, response);
-			}else
-			{
-				request.getRequestDispatcher("index.jsp").forward(request, response);
-			}
-    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+		System.out.println("In RegisterServlet.doPost() ");
+		DBUtil dbutil = new DBUtil();
+		UserInfoVO userVO = new UserInfoVO();
+		userVO.setuserName((String)request.getParameter("username"));
+		userVO.setpassWord((String)request.getParameter("password"));
+        userVO.setfirstName((String)request.getParameter("fname"));
+        userVO.setlname((String)request.getParameter("lname"));
+        userVO.setemail((String)request.getParameter("email"));
+//                System.out.println(userVO.getfirstName());
+		dbutil.RegisterUser(userVO);
+		request.getRequestDispatcher("RegistrationResult.jsp").forward(request, response);
+	}
 
     /**
      * Returns a short description of the servlet.
