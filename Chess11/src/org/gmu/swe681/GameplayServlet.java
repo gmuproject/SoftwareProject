@@ -53,7 +53,7 @@ public class GameplayServlet extends HttpServlet {
 		String move=(String)request.getParameter("move");
 		System.out.println(move);
 		
-		boolean valid=chesscode.processMove(move);
+		boolean valid=chesscode.ProcessWhiteMove(move);
 		request.getSession().setAttribute("gameboard", chesscode.getBoard1());
 		request.getRequestDispatcher("ShowGameBoardResult.jsp").forward(request, response);
 //		if(!valid)
