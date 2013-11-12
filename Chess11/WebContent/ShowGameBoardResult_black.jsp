@@ -119,8 +119,8 @@
 			</tr>		
 			
 			<form method="post" action="GameplayServlet">
-				<h3>White to move:</h3>
-			    <input type="text" name="wmove">
+				<h3>Black to move:</h3>
+			    <input type="text" name="bmove">
 				<input type="submit" name="submit" >
 				</form>
 		</tbody>

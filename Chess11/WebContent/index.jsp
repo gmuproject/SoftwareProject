@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-             <form method="post" action="/Chess11/Login">
+             <form method="post" action="/Chess_11032013/Login">
                     <center>
                             <h1> <b>Welcome to Chess World!!!</b></h1>
                     </center>

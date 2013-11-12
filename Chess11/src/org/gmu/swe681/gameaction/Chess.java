@@ -126,9 +126,11 @@ public class Chess
 				System.out.println(move.charAt(6));
 				if((move.charAt(5)=='+')&&(move.charAt(6)=='+'))
 				{
-					valid=(validWhite(src1,src2,dst1,dst2,piece) )&& (isCheckmate("white",wK));
+					System.out.println("check mate");
+					valid=(validWhite(src1,src2,dst1,dst2,piece) )&& (isCheckmate("black",wK));
 					if (valid)
 					{
+						System.out.println("You Won!!!");
 						checkmate=true;
 					}
 				}
@@ -202,6 +204,7 @@ public class Chess
 
 	private boolean validWhite(int src1,int src2,int dst1,int dst2,char piece) 
 	{
+		System.out.println("Valid White");
 		boolean flag=false;
 		if(hasPiece(src1,src2,piece)==true)
 		{
@@ -232,12 +235,13 @@ public class Chess
 				}
 			}
 		}
-		
+		System.out.println(flag);
 		return flag;
 	}
 	
 	private boolean validBlack(int src1,int src2,int dst1,int dst2,char piece) 
 	{
+		System.out.println("Valid White");
 		boolean flag=false;
 		if(hasPiece(src1,src2,piece)==true)
 		{
@@ -423,7 +427,7 @@ public class Chess
 		{
 			if(src2!=dst2) 
 			{
-				for(int i=src2;i<dst2;i++)
+				for(int i=src2+1;i<dst2;i++)
 				{
 					if(board[src1][i]!='*')
 					{
@@ -439,7 +443,7 @@ public class Chess
 			{
 				for(int i=src1;i<dst1;i++)
 				{
-					if(board[src1][i]!='*')
+					if(board[i][src2+1]!='*')
 					{
 						return false;
 					}
@@ -491,6 +495,7 @@ public class Chess
 	
 	private boolean IsWhiteCheck(int wKingR, int wKingC)
 	{
+		System.out.println("inside white check");
 		//Check for rook or queen to left
 		for(int i=wKingR-1;i>=0;i--)
 		{
@@ -779,195 +784,275 @@ public class Chess
 	
 	private boolean isCheckmate(String type,int[] kingPosition)
 	{
-		
+		System.out.println("inside checkmate");
 		int x=kingPosition[0];
 		int y=kingPosition[1];
 		if(type.equals("white"))
 		{
+			System.out.println("white checkmate");
 			if(x==0 && y==0)
 			{
+				System.out.println("white checkmate1");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsWhiteCheck(x+i,y+j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') && (Character.isUpperCase(board[x+i][y+j])==false))
+						{
+							if(IsWhiteCheck(x+i,y+j)==false)
+								return false;
+						}
 					}
 				}
 			}
 			else if(x==0 && y==7)
 			{
+				System.out.println("white checkmate2");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsWhiteCheck(x+i,y-j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==false))
+						{
+							if(IsWhiteCheck(x+i,y-j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(x==7 && y==7)
 			{
+				System.out.println("white checkmate3");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsWhiteCheck(x-i,y-j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==false))
+						{
+							if(IsWhiteCheck(x-i,y-j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(x==7 && y==0)
 			{
+				System.out.println("white checkmate4");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsWhiteCheck(x-i,y+j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==false))
+						{
+							if(IsWhiteCheck(x-i,y+j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(x==0 && y>0 && y<7)
 			{
+				System.out.println("white checkmate5");
 				for(int i=0;i<2;i++)
 				{
+					System.out.println("white checkmate5-1");
 					for(int j=0;j<3;j++)
 					{
-						if(IsWhiteCheck(x+i,y+j-1)==false)
-							return false;
+						System.out.println("white checkmate5-2 "+i);
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==false))
+						{
+							System.out.println("white checkmate5-3 "+(x+i)+(y+j));
+							if(IsWhiteCheck(x+i,y+j-1)==false)
+							{
+								System.out.println("white checkmate5-4 "+i+j);
+								return false;
+							}
+						}
 					}
 				}
 			}else if(x==7 && y>0 && y<7)
 			{
+				System.out.println("white checkmate6");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<3;j++)
 					{
-						if(IsWhiteCheck(x-i,y+j-1)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==false))
+						{
+							if(IsWhiteCheck(x-i,y+j-1)==false)
+								return false;
+						}
 					}
 				}
 			}else if(y==7 && x>0 && x<7)
 			{
+				System.out.println("white checkmate7");
 				for(int i=0;i<3;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsWhiteCheck(x+i-1,y-j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==false))
+						{
+							if(IsWhiteCheck(x+i-1,y-j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(y==0 && x>0 && x<7)
 			{
+				System.out.println("white checkmate8");
 				for(int i=0;i<3;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsWhiteCheck(x+i-1,y+j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==false))
+						{
+							if(IsWhiteCheck(x+i-1,y+j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(y>0 && y<7 && x>0 && x<7)
 			{
+				System.out.println("white checkmate9");
 				for(int i=0;i<3;i++)
 				{
 					for(int j=0;j<3;j++)
 					{
-						if(IsWhiteCheck(x+i-1,y+j-1)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==false))
+						{
+							if(IsWhiteCheck(x+i-1,y+j-1)==false)
+								return false;
+						}
 					}
 				}
 			}
 			
 		}else if(type.equals("black"))
 		{
+			System.out.println("black checkmate");
 			if(x==0 && y==0)
 			{
+				System.out.println("black checkmate1");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsBlackCheck(x+i,y+j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==true))
+						{
+							if(IsBlackCheck(x+i,y+j)==false)
+								return false;
+						}
 					}
 				}
 			}
 			else if(x==0 && y==7)
 			{
+				System.out.println("black checkmate2");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsBlackCheck(x+i,y-j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==true))
+						{
+							if(IsBlackCheck(x+i,y-j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(x==7 && y==7)
 			{
+				System.out.println("black checkmate3");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsBlackCheck(x-i,y-j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==true))
+						{
+							if(IsBlackCheck(x-i,y-j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(x==7 && y==0)
 			{
+				System.out.println("black checkmate4");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsBlackCheck(x-i,y+j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==true))
+						{
+							if(IsBlackCheck(x-i,y+j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(x==0 && y>0 && y<7)
 			{
+				System.out.println("black checkmate5");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<3;j++)
 					{
-						if(IsBlackCheck(x+i,y+j-1)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==true))
+						{
+							if(IsBlackCheck(x+i,y+j-1)==false)
+								return false;
+						}
 					}
 				}
 			}else if(x==7 && y>0 && y<7)
 			{
+				System.out.println("black checkmate6");
 				for(int i=0;i<2;i++)
 				{
 					for(int j=0;j<3;j++)
 					{
-						if(IsBlackCheck(x-i,y+j-1)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==true))
+						{
+							if(IsBlackCheck(x-i,y+j-1)==false)
+								return false;
+						}
 					}
 				}
 			}else if(y==7 && x>0 && x<7)
 			{
+				System.out.println("black checkmate7");
 				for(int i=0;i<3;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsBlackCheck(x+i-1,y-j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==true))
+						{
+							if(IsBlackCheck(x+i-1,y-j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(y==0 && x>0 && x<7)
 			{
+				System.out.println("black checkmate8");
 				for(int i=0;i<3;i++)
 				{
 					for(int j=0;j<2;j++)
 					{
-						if(IsBlackCheck(x+i-1,y+j)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==true))
+						{
+							if(IsBlackCheck(x+i-1,y+j)==false)
+								return false;
+						}
 					}
 				}
 			}else if(y>0 && y<7 && x>0 && x<7)
 			{
+				System.out.println("black checkmate9");
 				for(int i=0;i<3;i++)
 				{
 					for(int j=0;j<3;j++)
 					{
-						if(IsBlackCheck(x+i-1,y+j-1)==false)
-							return false;
+						if((board[x+i][y+j]=='*') || (Character.isUpperCase(board[x+i][y+j])==true))
+						{
+							if(IsBlackCheck(x+i-1,y+j-1)==false)
+								return false;
+						}
 					}
 				}
 			}

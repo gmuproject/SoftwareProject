@@ -50,12 +50,25 @@ public class GameplayServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String move=(String)request.getParameter("move");
-		System.out.println(move);
 		
-		boolean valid=chesscode.ProcessWhiteMove(move);
-		request.getSession().setAttribute("gameboard", chesscode.getBoard1());
-		request.getRequestDispatcher("ShowGameBoardResult.jsp").forward(request, response);
+		String wmove=(String)request.getParameter("wmove");
+		System.out.println(wmove);
+		
+		String bmove=(String)request.getParameter("bmove");
+		System.out.println(bmove);
+		boolean valid;
+		if(wmove !=null)
+		{
+			valid=chesscode.ProcessWhiteMove(wmove);
+			request.getSession().setAttribute("gameboard", chesscode.getBoard1());
+			request.getRequestDispatcher("ShowGameBoardResult_black.jsp").forward(request, response);
+
+		}else if(bmove !=null)
+		{
+			valid=chesscode.ProcessBlackMove(bmove);
+			request.getSession().setAttribute("gameboard", chesscode.getBoard1());
+			request.getRequestDispatcher("ShowGameBoardResult.jsp").forward(request, response);
+		}
 //		if(!valid)
 //		{
 //			whiteMove();

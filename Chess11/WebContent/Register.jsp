@@ -10,7 +10,7 @@
         <h1>Hello Chess World!</h1>
      
           
-         <form method="post" action="/Chess11/Register">
+         <form method="post" action="/Chess_11032013/Register">
                      username:<input type="text" name="username">
                  <br>
                  <br>
